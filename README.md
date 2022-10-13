@@ -74,16 +74,17 @@ Apple's Home app does not support all of the features of this plugin. Some [thir
   * **Hood:**
     * Switch on/off.
     * Switch fan on/off, set fan speed/intensive levels, and select manual/auto mode.
-    * Switch functional light on/off and change brightness.
+    * Switch functional light on/off, change brightness, and select colour temperature.
     * Switch ambient light on/off, change brighness, and select colour.
     * Monitor remote control and general operation status.
-    * Automation trigger for finished.
+    * Automation triggers for finished, grease filter nearly saturated, and grease filter saturated.
   * **Oven:**
     * Switch on/off and start/stop programs with preset options.
+    * Open or partly open the door.
     * Set sabbath mode.
     * Control alarm clock and child lock.
     * Monitor door, programs, program time remaining, remote control, and general operation status.
-    * Automation triggers for finished, aborted, alarm clock finished, and preheat finished, 
+    * Automation triggers for finished, aborted, alarm clock finished, fast preheat finished, and regular preheat finished,
   * **WarmingDrawer:**
     * Switch on/off and start/stop programs with preset options.
     * Control child lock.
@@ -101,16 +102,22 @@ Apple's Home app does not support all of the features of this plugin. Some [thir
     * Control child lock.
     * Monitor door, program time remaining, remote control, and general operation status.
     * Automation triggers for finished and aborted.
-  * **Dryer / Washer / WasherDryer:**
+  * **Dryer:**
     * Start/stop programs with preset options.
     * Control child lock.
     * Monitor power, door, program time remaining, remote control, and general operation status.
     * Automation triggers for finished and aborted.
+  * **Washer / WasherDryer:**
+    * Start/stop programs with preset options.
+    * Control child lock.
+    * Monitor power, door, program time remaining, remote control, and general operation status.
+    * Automation triggers for finished, aborted, i-Dos 1 fill level low, and i-Dos 2 fill level low.
     
 ### Cooling Appliances
 
   * **Freezer / FridgeFreezer / Refrigerator:**
     * Set freezer/refrigerator super, eco, sabbath, refrigerator vacation, and refrigerator fresh modes.
+    * Open the door.
     * Control child lock.
     * Monitor power and door.
     * Automation triggers for freezer/refrigerator door and freezer temperature alarms.
@@ -129,15 +136,23 @@ All notable changes to this project are documented in the [CHANGELOG.md](CHANGEL
 
 Report any issues on [GitHub](https://github.com/thoukydides/homebridge-homeconnect/issues/new/choose).
 
-Please attach the relevant section of the Homebridge log file, either pasted into the issue or attached as a text file (*not a screenshot*). Extra debug should be enabled and captured if appropriate:
-* **Homebridge debug logging:** Start Homebridge with the `-D` option to capture the *debug* level messages. These are used by this plugin to log basic information about each request to the Home Connect servers (but not the actual contents of the requests or responses) and other internal state. Please enable this for any issues that involve problems connecting to the Home Connect servers, API errors, or other problems with appliance state or control.
-* **HomeKit Accessory Protocol (HAP) logging:** Setting the `DEBUG=*` environment variable before starting Homebridge results in verbose logging of all [HAP-NodeJS](https://github.com/KhaosT/HAP-NodeJS) HomeKit exchanges. Please enable this for any issues that involve problems controlling appliances from HomeKit or Siri.
+Before raising an issue please check whether it relates to an expected [error message](https://github.com/thoukydides/homebridge-homeconnect/wiki/Errors) and whether any similar [issues already exist](https://github.com/thoukydides/homebridge-homeconnect/issues?utf8=%E2%9C%93&q=). If the issue relates to a problem connecting to the Home Connect servers or with controlling an appliance then please also:
 
-Before raising an issue please check whether it relates to an expected [error message](https://github.com/thoukydides/homebridge-homeconnect/wiki/Errors) and whether any similar [issues already exist](https://github.com/thoukydides/homebridge-homeconnect/issues?utf8=%E2%9C%93&q=).
+  * Using the official Home Connect app:
+    * Confirm that the appliance can be properly controlled as expected.
+    * Open the appliance Settings, scroll to the Network section, and verify that all three lines (for the links between the appliance, cloud, and phone) and green.
+  * Check the status of the Home Connect servers using:
+    * The official [Home Connect System Status](https://www.home-connect.com/global/help-support/system-status) page.
+    * The unofficial [Home Connect Server Status](https://homeconnect.thouky.co.uk) page.
+
+Please attach the relevant section of the Homebridge log file, either pasted into the issue or attached as a text file (*not a screenshot*). Extra debug should be enabled and captured if appropriate:
+
+  * **Homebridge debug logging:** Start Homebridge with the `-D` option to capture the *debug* level messages. These are used by this plugin to log basic information about each request to the Home Connect servers (but not the actual contents of the requests or responses) and other internal state. Please enable this for any issues that involve problems connecting to the Home Connect servers, API errors, or other problems with appliance state or control.
+  * **HomeKit Accessory Protocol (HAP) logging:** Setting the `DEBUG=*` environment variable before starting Homebridge results in verbose logging of all [HAP-NodeJS](https://github.com/KhaosT/HAP-NodeJS) HomeKit exchanges. Please enable this for any issues that involve problems controlling appliances from HomeKit or Siri.
 
 ## License
 
-> ISC License (ISC)<br>Copyright © 2019-2021 Alexander Thoukydides
+> ISC License (ISC)<br>Copyright © 2019-2022 Alexander Thoukydides
 >
 > Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 >

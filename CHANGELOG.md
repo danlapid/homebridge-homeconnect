@@ -4,6 +4,76 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [v0.26.1] - 2022-09-23
+### Fixed
+* **Dryer/WasherDryer:** Restored support for these appliance types. ([#107])
+
+## [v0.26.0] - 2022-09-23
+### Added
+* **Hood:** Added ability to set the colour temperature of functional lights.
+* **Hood:** Added automation triggers for grease filter saturation.
+* **Washer/WasherDryer:** Added automation triggers for when i-Dos (1 or 2) fill levels are low.
+
+## [v0.25.0] - 2022-07-11
+### Added
+* **Oven:** Added automation trigger for regular preheat finished (in addition to the existing fast preheat trigger).
+* **Freezer/FridgeFreezer/Oven/Refrigerator:** Added ability to open or (Oven appliances only) partly open the appliance door, if supported by the appliance.
+### Changed
+* **CoffeeMaker/Dishwasher/Dryer/Freezer/FridgeFreezer/Oven/Refrigerator/Washer/WasherDryer/WineCooler:** To support opening the appliance door, the door position and lock status have been moved from the main power `Switch` to a new `Door` service. The `CurrentDoorState` characteristic has been replaced by `CurrentPosition`.
+
+## [v0.24.6] - 2022-07-02
+### Added
+* Log and check version numbers of key dependencies.
+### Changed
+* More accurate specification of the required Node.js version.
+* Bumped undici version to latest release.
+
+## [v0.24.5] - 2022-06-17
+### Changed
+* Bumped undici version due to MITM vulnerability. ([#90])
+
+## [v0.24.4] - 2022-05-13
+### Changed
+* Workaround undocumented change to event stream format for `CONNECTED` and `DISCONNECTED` events. ([#88])
+
+## [v0.24.3] - 2022-05-05
+### Fixed
+* Corrected addition of `content-type` header with undici@5.1.0 and later. ([#86])
+
+## [v0.24.2] - 2022-05-04
+### Fixed
+* Added explicit `content-type` header to all authorization requests (Device Flow, Authorization Code Grant Flow, and Access Token refreshing). ([#86])
+### Changed
+* If the Home Connect API reports that an appliance supports both `Off` and `Standby` then it is treated as an error, and neither are supported. ([#83])
+* **Dishwasher/Hood:** Set the initial value for `Brightness` characteristics at the same time as setting their allowed range. ([#84])
+
+## [v0.24.1] - 2022-04-03
+### Fixed
+* Bumped the minimum Node version to 16.14 (required for `AbortSignal.timeout()`. ([#80])
+
+## [v0.24.0] - 2022-04-02
+### Fixed
+* Fully support appliance `haID` values that are comprised of 18 decimal digits (rather than just those that include the manufacturer's name and model number). Loss of the event stream was previously ignored for these appliances, but is now treated the same as the appliance being disconnected.
+### Changed
+* Replaced used of `request` and `request-promise-native` (both deprecated since 11th February 2020) with `undici`. (This results in Node writing an `ExperimentalWarning: buffer.Blob is an experimental feature` message to the console, but this is safe to ignore.)
+* Updated dependencies to the latest compatible versions. Node 16.5 (or later) is required.
+
+## [v0.23.8] - 2022-03-14
+### Fixed
+* **CleaningRobot/Cooktop/Dishwasher:** When program options are read due to a new program being selected, the appliance's power and selected program are no longer controlled. This should prevent the appliance from being incorrectly switched off when being operated manually. ([#78])
+
+## [v0.23.7] - 2022-02-18
+### Fixed
+* Improved handling of appliances that are removed from and re-added to the Home Connect account. Previously, if the appliance was re-added without the plugin noticing its prior removal (via its hourly poll) then it would remain unusable until Homebridge is restarted. The `DEPAIRED` and `PAIRED` events are not treated similarly to `DISCONNECTED` and `CONNECTED`, updating the appliance's connection status appropriately.
+
+## [v0.23.6] - 2022-02-09
+### Fixed
+* Improved handling of appliances that are in the `DISCONNECTED` state when Homebridge is (re)started. This should result in a more consistent state when appliances are switched off or otherwise inaccessible. ([#72])
+
+## [v0.23.5] - 2022-02-08
+### Fixed
+* Improved handling of `BSH.Common.Setting.PowerState` or `BSH.Common.Status.OperationState` reads that complete after a `DISCONNECTED` event. This should result in a more consistent state when appliances are switched off or otherwise inaccessible. ([#72])
+
 ## [v0.23.4] - 2021-12-29
 ### Changed
 * Removed dependency on the legacy Node.js `url` and `querystring` packages.
@@ -287,7 +357,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-Copyright © 2019-2021 Alexander Thoukydides
+Copyright © 2019-2022 Alexander Thoukydides
 
 [Wiki]:             https://github.com/thoukydides/homebridge-homeconnect/wiki
 [config.json]:      https://github.com/thoukydides/homebridge-homeconnect/wiki/config.json      "Wiki: config.json"
@@ -369,8 +439,62 @@ Copyright © 2019-2021 Alexander Thoukydides
 [#65]:              https://github.com/thoukydides/homebridge-homeconnect/issues/65             "Issue #65"
 [#66]:              https://github.com/thoukydides/homebridge-homeconnect/issues/66             "Issue #66"
 [#67]:              https://github.com/thoukydides/homebridge-homeconnect/issues/67             "Issue #67"
+[#68]:              https://github.com/thoukydides/homebridge-homeconnect/issues/68             "Issue #68"
+[#69]:              https://github.com/thoukydides/homebridge-homeconnect/pull/69               "Pull #69"
+[#70]:              https://github.com/thoukydides/homebridge-homeconnect/issues/70             "Issue #70"
+[#71]:              https://github.com/thoukydides/homebridge-homeconnect/issues/71             "Issue #71"
+[#72]:              https://github.com/thoukydides/homebridge-homeconnect/issues/72             "Issue #72"
+[#73]:              https://github.com/thoukydides/homebridge-homeconnect/issues/73             "Issue #73"
+[#74]:              https://github.com/thoukydides/homebridge-homeconnect/issues/74             "Issue #74"
+[#75]:              https://github.com/thoukydides/homebridge-homeconnect/issues/75             "Issue #75"
+[#76]:              https://github.com/thoukydides/homebridge-homeconnect/issues/76             "Issue #76"
+[#77]:              https://github.com/thoukydides/homebridge-homeconnect/issues/77             "Issue #77"
+[#78]:              https://github.com/thoukydides/homebridge-homeconnect/issues/78             "Issue #78"
+[#79]:              https://github.com/thoukydides/homebridge-homeconnect/issues/79             "Issue #79"
+[#80]:              https://github.com/thoukydides/homebridge-homeconnect/issues/80             "Issue #80"
+[#81]:              https://github.com/thoukydides/homebridge-homeconnect/issues/81             "Issue #81"
+[#82]:              https://github.com/thoukydides/homebridge-homeconnect/issues/82             "Issue #82"
+[#83]:              https://github.com/thoukydides/homebridge-homeconnect/issues/83             "Issue #83"
+[#84]:              https://github.com/thoukydides/homebridge-homeconnect/issues/84             "Issue #84"
+[#85]:              https://github.com/thoukydides/homebridge-homeconnect/issues/85             "Issue #85"
+[#86]:              https://github.com/thoukydides/homebridge-homeconnect/issues/86             "Issue #86"
+[#87]:              https://github.com/thoukydides/homebridge-homeconnect/pull/87               "Pull #87"
+[#88]:              https://github.com/thoukydides/homebridge-homeconnect/pull/88               "Pull #88"
+[#89]:              https://github.com/thoukydides/homebridge-homeconnect/issues/89             "Issue #88"
+[#90]:              https://github.com/thoukydides/homebridge-homeconnect/pull/90               "Pull #90"
+[#91]:              https://github.com/thoukydides/homebridge-homeconnect/issues/91             "Issue #91"
+[#92]:              https://github.com/thoukydides/homebridge-homeconnect/discussions/92        "Discussion #92"
+[#93]:              https://github.com/thoukydides/homebridge-homeconnect/issues/93             "Issue #93"
+[#94]:              https://github.com/thoukydides/homebridge-homeconnect/issues/94             "Issue #94"
+[#95]:              https://github.com/thoukydides/homebridge-homeconnect/issues/95             "Issue #95"
+[#96]:              https://github.com/thoukydides/homebridge-homeconnect/discussions/96        "Discussion #96"
+[#97]:              https://github.com/thoukydides/homebridge-homeconnect/issues/97             "Issue #97"
+[#98]:              https://github.com/thoukydides/homebridge-homeconnect/pull/98               "Pull #98"
+[#99]:              https://github.com/thoukydides/homebridge-homeconnect/issues/99             "Issue #99"
+[#100]:             https://github.com/thoukydides/homebridge-homeconnect/pull/100              "Pull #100"
+[#101]:             https://github.com/thoukydides/homebridge-homeconnect/issues/101            "Issue #101"
+[#102]:             https://github.com/thoukydides/homebridge-homeconnect/discussions/102       "Discussion #102"
+[#103]:             https://github.com/thoukydides/homebridge-homeconnect/issues/103            "Issue #103"
+[#104]:             https://github.com/thoukydides/homebridge-homeconnect/discussions/104       "Discussion #104"
+[#105]:             https://github.com/thoukydides/homebridge-homeconnect/issues/105            "Issue #105"
+[#106]:             https://github.com/thoukydides/homebridge-homeconnect/discussions/106       "Discussion #106"
+[#107]:             https://github.com/thoukydides/homebridge-homeconnect/issues/107            "Issue #107"
 
-[Unreleased]:       https://github.com/thoukydides/homebridge-homeconnect/compare/v0.23.4...HEAD
+[Unreleased]:       https://github.com/thoukydides/homebridge-homeconnect/compare/v0.26.1...HEAD
+[v0.26.1]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.26.0...v0.26.1
+[v0.26.0]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.25.0...v0.26.0
+[v0.25.0]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.24.6...v0.25.0
+[v0.24.6]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.24.5...v0.24.6
+[v0.24.5]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.24.4...v0.24.5
+[v0.24.4]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.24.3...v0.24.4
+[v0.24.3]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.24.2...v0.24.3
+[v0.24.2]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.24.1...v0.24.2
+[v0.24.1]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.24.0...v0.24.1
+[v0.24.0]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.23.8...v0.24.0
+[v0.23.8]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.23.7...v0.23.8
+[v0.23.7]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.23.6...v0.23.7
+[v0.23.6]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.23.5...v0.23.6
+[v0.23.5]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.23.4...v0.23.5
 [v0.23.4]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.23.3...v0.23.4
 [v0.23.3]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.23.2...v0.23.3
 [v0.23.2]:          https://github.com/thoukydides/homebridge-homeconnect/compare/v0.23.1...v0.23.2
